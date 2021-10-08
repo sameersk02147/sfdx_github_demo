@@ -31,7 +31,7 @@ jobs:
           npm install sfdx-cli --global
           sfdx --version
           sfdx plugins --core
-          apt-get install -y jq
+          #apt-get install -y jq
           echo force://PlatformCLI::5Aep861sY.Bl4bMk9lhxgSpZJOoF8otCe8oMxXNqEaaCX3BVdavZzwYQkyw0ExLls9XTLWUMyW7ku2kDguXGqxi@whirlpoolindia--devops.my.salesforce.com > env.sfdx
           echo ${env.sfdx}
           sfdx force:auth:sfdxurl:store -d -a SAMORG -f ${env.sfdx}
