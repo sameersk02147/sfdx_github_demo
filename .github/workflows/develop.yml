@@ -21,8 +21,8 @@ jobs:
         run: |
           git log --oneline
           #git rev-parse HEAD
-          export git rev-parse HEAD^ > headcommit
-          echo $headcommit
+          head_commit=$(git rev-parse HEAD^)
+          echo $head_commit
 
           
         
