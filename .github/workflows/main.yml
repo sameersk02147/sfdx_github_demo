@@ -44,9 +44,9 @@ jobs:
           fi
           #echo "---- Validating delta package  ----"
           echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
-          git status
-          git add force-app_delta
-          git commit -m "added delta packages"
-          git push
+      - uses: actions/upload-artifact@v2
+        with:
+          name: delta files
+          path: report/force-app_delta.txt
         
 
