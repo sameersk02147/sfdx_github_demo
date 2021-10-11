@@ -45,9 +45,7 @@ jobs:
           fi
           #echo "---- Validating delta package  ----"
           echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
-      - uses: actions/upload-artifact@v2
-        with:
-          name: delta files
-          path: force-app_**
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v2
         
 
