@@ -4,9 +4,9 @@ name: 'sfdx'
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ Develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ Develop ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,6 +23,8 @@ jobs:
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install
+          sfdx --version
+          sfdx plugins --core
       - name: Auth with the DevHub
         run: 'sfdx force:auth:sfdxurl:store -f token.txt -a DevHub -d'
         
