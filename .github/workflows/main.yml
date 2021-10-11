@@ -4,8 +4,8 @@ name: 'main'
 on:
   workflow_dispatch:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -48,8 +48,8 @@ jobs:
           #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
           #sfdx force:apex:test:run --wait 10 --resultformat human --codecoverage --testlevel RunLocalTests -u ${{secrets.DEMO_ALIAS}}
           #sfdx force:apex:test:run --wait 10 -n Woil_CustomerTrigger_handler -r human -u ${{secrets.DEMO_ALIAS}}
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add force-app_delta
-          git commit -m "force-app_delta"
-          git push
+          #git config user.name github-actions
+          #git config user.email github-actions@github.com
+          #git add force-app_delta
+          #git commit -m "force-app_delta"
+          #git push
