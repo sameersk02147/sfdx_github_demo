@@ -32,5 +32,13 @@ jobs:
         run: 'sfdx force:auth:sfdxurl:store -f token.txt -a ${{secrets.DEMO_ALIAS}} -d'
       - name: Dev hub connection verify
         run: 'sfdx force:org:list'
+      - name: verify and deploy delta changes
+        run: |
+          echo $GITHUB_SHA
+          if [ -d force-app_delta ]; then
+          rm -rf force-app_delta
+          fi
+          echo "---- Validating delta package  ----"
+          echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h `git rev-parse HEAD^` -d force-app
         
 
