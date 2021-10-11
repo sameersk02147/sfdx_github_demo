@@ -37,14 +37,12 @@ jobs:
       - name: verify and deploy delta changes
         run: |
           echo $GITHUB_SHA
-          git log --oneline
-          #git rev-parse HEAD
-          git rev-parse HEAD^ > headcommit
-          echo "$headcommit"
+          head_commit=$(git rev-parse HEAD^)
+          echo $head_commit
           if [ -d force-app_delta ]; then
           rm -rf force-app_delta
           fi
           #echo "---- Validating delta package  ----"
-          #echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h ${headcommit} -d force-app
+          #echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
         
 
