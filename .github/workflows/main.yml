@@ -47,7 +47,7 @@ jobs:
           echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add force-app_*
+          git add force-app_delta
           git commit -m "force-app_delta"
           git push
         
