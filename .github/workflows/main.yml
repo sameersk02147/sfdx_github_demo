@@ -45,7 +45,7 @@ jobs:
           fi
           #echo "---- Validating delta package  ----"
           echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
-          sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
+          #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add force-app_delta
