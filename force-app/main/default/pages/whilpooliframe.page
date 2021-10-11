@@ -1,4 +1,4 @@
-//Check Delta
+//Check Deltas
 <apex:page >
   <apex:iframe height="300" width="100%" src="https://www.whirlpool.com/" scrolling="true"/>
 </apex:page>
