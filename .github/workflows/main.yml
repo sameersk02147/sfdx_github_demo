@@ -29,6 +29,8 @@ jobs:
       - name: Install vlocityestools
         run: 'echo y | sfdx plugins:install vlocityestools'
       - name: Auth with the DevHub
-        run: 'sfdx force:auth:sfdxurl:store -f token.txt -a DevHub -d'
+        run: 'sfdx force:auth:sfdxurl:store -f token.txt -a ${{secrets.DEMO_ALIAS}} -d'
+      - name: Dev hub connection verify
+        run: 'sfdx force:org:list'
         
 
