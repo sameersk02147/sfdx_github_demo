@@ -43,6 +43,6 @@ jobs:
           rm -rf force-app_delta
           fi
           #echo "---- Validating delta package  ----"
-          #echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
+          echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
         
 
