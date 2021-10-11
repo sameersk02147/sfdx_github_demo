@@ -14,12 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2              
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Install Salesforce CLI
         run: |
           git log --oneline
-          git rev-parse HEAD
-          git rev-parse HEAD^1
+          #git rev-parse HEAD
+          git rev-parse HEAD^
 
           
         
