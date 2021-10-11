@@ -38,8 +38,8 @@ jobs:
         run: |
           echo $GITHUB_SHA
           git rev-parse HEAD^
-          echo `rev-parse HEAD^` > headcommit
-          echo "$headcommit"
+          git rev-parse HEAD^ > headcommit
+          echo $headcommit
           if [ -d force-app_delta ]; then
           rm -rf force-app_delta
           fi
