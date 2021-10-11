@@ -1,0 +1,23 @@
+name: 'sfdx'
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ Develop ]
+  pull_request:
+    branches: [ Develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2              
+      - name: Install Salesforce CLI
+        run: |
+          git rev-parse HEAD^
+        
+        
+
