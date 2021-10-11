@@ -25,6 +25,7 @@ jobs:
           ./sfdx-cli/install
           sfdx --version
           sfdx plugins --core
+          apt-get install -y jq
       - name: Auth with the DevHub
         run: 'sfdx force:auth:sfdxurl:store -f token.txt -a DevHub -d'
         
