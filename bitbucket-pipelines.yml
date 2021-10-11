@@ -1,0 +1,58 @@
+# Doc: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
+image: samcorp01/sfdx_vlocity:v2.0
+#image: atlassian/default-image:2
+pipelines:
+    pull-requests:
+      '{feature/*,fix/*,defect/*}':
+      - step:
+          name: SIT Deploy
+          script:
+            - echo $BITBUCKET_PR_DESTINATION_BRANCH
+            - echo $SIT_AUTH_URL
+            - echo $SIT_ALIAS
+            - echo $commitid $
+            #- chmod +x ./scripts/tests
+            #- ./scripts/tests ${BITBUCKET_PR_DESTINATION_BRANCH}
+            - echo ${SIT_AUTH_URL} > environment.sfdx
+            - sfdx force:auth:sfdxurl:store -d -a ${SIT_Alias} -f environment.sfdx
+              # - sfdx force:apex:test:run --codecoverage --resultformat human -u ${SIT_Alias} --verbose
+            - sfdx force:source:deploy --sourcepath force-app --targetusername ${SIT_Alias} --verbose --checkonly
+
+#run manually for each stage
+    custom:
+    #branches:
+      SIT_Deploy:
+        - step:
+            name: SIT Deploy
+            deployment: SIT Deploy
+            #trigger: manual
+            script:
+             - echo ${SIT_AUTH_URL} > env.sfdx
+             - sfdx force:auth:sfdxurl:store -d -a ${SIT_Alias} -f env.sfdx
+             - sfdx force:source:deploy --sourcepath salesforce_sfdx --targetusername ${SIT_Alias} --verbose --checkonly
+             
+      QA_Deploy:
+        - step:
+            name: QA Deploy
+            deployment: QA Deploy
+            #trigger: manual
+            script:
+             - echo ${QA_AUTH_URL} > env.sfdx
+             - sfdx force:auth:sfdxurl:store -d -a ${QA_Alias} -f env.sfdx
+             - sfdx force:source:deploy --sourcepath salesforce_sfdx --targetusername ${QA_Alias} --verbose --checkonly
+      UATDeploy:
+        - step:
+            name: UAT Deploy
+            deployment: UAT Deploy
+            script:
+             - echo ${UAT_AUTH_URL} > env.sfdx
+             - sfdx force:auth:sfdxurl:store -d -a ${UAT_Alias} -f env.sfdx
+             - sfdx force:source:deploy --sourcepath salesforce_sfdx --targetusername ${UAT_Alias} --verbose --checkonly
+      PreProd:
+        - step:
+            name: PreProd Deploy
+            deployment: Staging
+            script:
+             - echo ${PreProd_AUTH_URL} > env.sfdx
+             - sfdx force:auth:sfdxurl:store -d -a ${PreProd_Alias} -f env.sfdx
+             - sfdx force:source:deploy --sourcepath salesforce_sfdx --targetusername ${PreProd_Alias} --verbose --checkonly
