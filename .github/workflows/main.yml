@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2              
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Write the token into a file
         run: 'echo ${{ secrets.DEVHUB_TOKEN}} > token.txt'
       - name: Install Salesforce CLI
@@ -35,13 +37,12 @@ jobs:
       - name: verify and deploy delta changes
         run: |
           echo $GITHUB_SHA
-          echo git rev-parse HEAD^
-          #echo `git rev-parse HEAD^` > hash
-          echo "$hash"
+          git rev-parse HEAD^ > headcommit
+          echo "$headcommit"
           if [ -d force-app_delta ]; then
           rm -rf force-app_delta
           fi
           #echo "---- Validating delta package  ----"
-          #echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h `git rev-parse HEAD^` -d force-app
+          #echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h ${headcommit} -d force-app
         
 
