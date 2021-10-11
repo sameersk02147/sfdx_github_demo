@@ -37,9 +37,9 @@ jobs:
       - name: verify and deploy delta changes
         run: |
           echo $GITHUB_SHA
-          git rev-parse HEAD^
+          #git rev-parse HEAD^
           git rev-parse HEAD^ > headcommit
-          echo $headcommit
+          echo "$headcommit"
           if [ -d force-app_delta ]; then
           rm -rf force-app_delta
           fi
