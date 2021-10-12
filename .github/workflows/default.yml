@@ -1,14 +1,14 @@
 name: 'default'
 
 on:
-  push:
-      branches:
-      - main
-      - develop
-      - qa
-      - sit
-      - uat
-      - prod
+  #push:
+  #    branches:
+  #    - main
+  #    - develop
+  #    - qa
+  #    - sit
+  #    - uat
+  #    - prod
   pull_request:
       branches:
       - main
