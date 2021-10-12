@@ -52,21 +52,21 @@ jobs:
           #echo "---- Validating delta package  ----"
           echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
           
-          if [[ -d force-app_delta ]]; then
-            if [[ "${{secrets.DEMO_ALIAS}}" == "Demo"]]; then
+          if [ -d force-app_delta ]; then
+            if [ "${{secrets.DEMO_ALIAS}}" == "Demo" ]; then
               echo 'Demo org triggered'
               sfdx force:auth:sfdxurl:store -f ${{ secrets.DEMO_TOKEN}} -a ${{secrets.DEMO_ALIAS}} -d
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
-              elif [[ "${{secrets.Dev_ALIAS}}" == "Dev"]]; then
+              elif [ "${{secrets.Dev_ALIAS}}" == "Dev" ]; then
               echo 'Dev org triggered'
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.Dev_ALIAS}} --verbose --checkonly
-              elif [[ "${{secrets.QA_ALIAS}}" == "QA"]]; then
+              elif [ "${{secrets.QA_ALIAS}}" == "QA" ]; then
               echo 'QA org triggered'
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.QA_ALIAS}} --verbose --checkonly
-              elif [ "${{secrets.UAT_ALIAS}}" = "UAT"]; then
+              elif [ "${{secrets.UAT_ALIAS}}" = "UAT" ]; then
               echo 'UAT org triggered'
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.UAT_ALIAS}} --verbose --checkonly
-              elif [ "${{secrets.Prod_ALIAS}}" = "Prod"]; then
+              elif [ "${{secrets.Prod_ALIAS}}" = "Prod" ]; then
               echo 'Prod org triggered'
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.Prod_ALIAS}} --verbose --checkonly
               else
