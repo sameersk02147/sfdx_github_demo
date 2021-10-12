@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 2
       - name: Write the token into a file
-        run: 'echo ${{ secrets.DEMO_TOKEN}} > token.txt'
+        run: 'echo ${{ secrets.DEMO_TOKEN}} > demotoken.txt'
       - name: Install Salesforce CLI
         run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
@@ -55,7 +55,7 @@ jobs:
           if [ -d force-app_delta ]; then
             if [ "${{secrets.DEMO_ALIAS}}" == "Demo" ]; then
               echo 'Demo org triggered'
-              sfdx force:auth:sfdxurl:store -f ${{ secrets.DEMO_TOKEN}} -a ${{secrets.DEMO_ALIAS}} -d
+              sfdx force:auth:sfdxurl:store -f demotoken.txt -a ${{secrets.DEMO_ALIAS}} -d
               #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
               elif [ "${{secrets.Dev_ALIAS}}" == "Dev" ]; then
               echo 'Dev org triggered'
