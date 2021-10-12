@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 2
       - name: Write the token into a file
-        run: 'echo ${{ secrets.DEMO_TOKEN}} > token.txt'
+        run: 'echo ${{ secrets.DEV_TOKEN}} > devtoken.txt'
       - name: Install Salesforce CLI
         run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
@@ -30,7 +30,7 @@ jobs:
       - name: Install vlocityestools
         run: 'echo y | sfdx plugins:install vlocityestools'
       - name: Auth with the DevHub
-        run: 'sfdx force:auth:sfdxurl:store -f token.txt -a ${{secrets.DEMO_ALIAS}} -d'
+        run: 'sfdx force:auth:sfdxurl:store -f devtoken.txt -a ${{secrets.DEV_ALIAS}} -d'
       - name: Dev hub connection verify
         run: 'sfdx force:org:list'
       - name: verify and deploy delta changes
