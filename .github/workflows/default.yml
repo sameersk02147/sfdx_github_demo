@@ -1,0 +1,71 @@
+name: 'default'
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Write the token into a file
+        run: 'echo ${{ secrets.DEMO_TOKEN}} > token.txt'
+      - name: Install Salesforce CLI
+        run: |
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+          mkdir sfdx-cli
+          tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+          ./sfdx-cli/install
+          sfdx --version
+          sfdx plugins --core
+          sudo apt-get install -y jq
+      - name: Install vlocityestools
+        run: 'echo y | sfdx plugins:install vlocityestools'
+      #- name: Auth with the DevHub
+      #  run: 'sfdx force:auth:sfdxurl:store -f token.txt -a ${{secrets.DEMO_ALIAS}} -d'
+      - name: verify and deploy delta changes
+        run: |
+          echo $GITHUB_SHA
+          head_commit=$(git rev-parse HEAD^)
+          echo $head_commit
+          if [ -d force-app_delta ]; then
+          rm -rf force-app_delta
+          fi
+          #echo "---- Validating delta package  ----"
+          echo y | sfdx vlocityestools:sfsource:createdeltapackagelocal -h $head_commit -d force-app
+          
+          if [ -d force-app_delta ]; then
+            if [ "${{secrets.DEMO_ALIAS}}" = "Demo"]; then
+              echo 'Demo org triggered'
+              sfdx force:auth:sfdxurl:store -f ${{ secrets.DEMO_TOKEN}} -a ${{secrets.DEMO_ALIAS}} -d
+              #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.DEMO_ALIAS}} --verbose --checkonly
+              elif [ "${{secrets.Dev_ALIAS}}" = "Dev"]; then
+              echo 'Dev org triggered'
+              #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.Dev_ALIAS}} --verbose --checkonly
+              elif [ "${{secrets.QA_ALIAS}}" = "QA"]; then
+              echo 'QA org triggered'
+              #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.QA_ALIAS}} --verbose --checkonly
+              elif [ "${{secrets.UAT_ALIAS}}" = "UAT"]; then
+              echo 'UAT org triggered'
+              #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.UAT_ALIAS}} --verbose --checkonly
+              elif [ "${{secrets.Prod_ALIAS}}" = "Prod"]; then
+              echo 'Prod org triggered'
+              #sfdx force:source:deploy --sourcepath force-app_delta -u ${{secrets.Prod_ALIAS}} --verbose --checkonly
+              else
+               echo "${Alias} is not available or valid, exiting..."
+               exit 120
+            fi
+          else
+            echo 'No delta folder found'
+            exit 1
+          fi
+          #sfdx force:apex:test:run --wait 10 --resultformat human --codecoverage --testlevel RunLocalTests -u ${{secrets.DEMO_ALIAS}}
+          #sfdx force:apex:test:run --wait 10 -n Woil_CustomerTrigger_handler -r human -u ${{secrets.DEMO_ALIAS}}
+          #git config user.name github-actions
+          #git config user.email github-actions@github.com
+          #git add force-app_delta
+          #git commit -m "force-app_delta"
+          #git push
