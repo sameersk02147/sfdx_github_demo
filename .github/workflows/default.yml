@@ -27,7 +27,13 @@ jobs:
         with:
           fetch-depth: 2
       - name: Write the token into a file
-        run: 'echo ${{ secrets.DEMO_TOKEN}} > demotoken.txt'
+        run: |
+          echo ${{ secrets.DEMO_TOKEN}} > demotoken.txt
+          echo ${{ secrets.DEV_TOKEN}} > devtoken.txt
+          echo ${{ secrets.QA_TOKEN}} > qatoken.txt
+          echo ${{ secrets.UAT_TOKEN}} > uattoken.txt
+          echo ${{ secrets.PROD_TOKEN}} > prodtoken.txt
+        
       - name: Install Salesforce CLI
         run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
