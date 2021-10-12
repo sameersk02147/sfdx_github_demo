@@ -1,7 +1,22 @@
 name: 'default'
 
-on: push
-
+on:
+  push:
+      branches:
+      - main
+      - develop
+      - qa
+      - sit
+      - uat
+      - prod
+  pull_request:
+      branches:
+      - main
+      - develop
+      - qa
+      - sit
+      - uat
+      - prod
 jobs:
   build:
 
