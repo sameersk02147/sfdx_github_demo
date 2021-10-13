@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
     inputs:
         environment:
-          description: 'Define env name'     
+        deploy_testlevel:
+          description: 'Specifies which tests are run as part of a deployment. Valid values are: NoTestRun, RunSpecifiedTests, RunLocalTests, RunAllTestsInOrg'
           required: true
-          default: 'prod'
+          default: RunLocalTests
   #push:
   pull_request:
     branches:
